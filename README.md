@@ -79,9 +79,24 @@ urgent one.
 
 ## Status
 
-Early hackathon build. The local JSON store is a stand-in for DynamoDB;
-perk extraction currently takes pasted/forwarded email text rather than a
-live inbox connection.
+**Verified working end to end against live Bedrock**, not just built:
+running `demo.py` correctly extracts all perks from three noisy sample
+emails, correctly recognizes when one has already expired relative to
+the current date, prioritizes across open perks, and proposes a
+concrete, scoped build plan with milestones and a cost estimate —
+explicitly asking for approval rather than deciding on its own.
+
+Getting a live run took real troubleshooting: a brand-new AWS account
+defaults every Bedrock model quota to 0 tokens/requests per minute
+regardless of the published default (confirmed via the Service Quotas
+console, not assumed) - fixed by requesting an increase up to AWS's
+own stated default, approved within about 3 days via AWS Support.
+
+Known limitations: the local JSON store is a stand-in for DynamoDB;
+perk extraction currently takes pasted/forwarded email text rather than
+a live inbox connection; Windows terminals need UTF-8 stdout
+(`demo.py` sets this) since the model streams characters (em dashes,
+etc.) the default Windows codec can't encode.
 
 ## License
 

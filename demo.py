@@ -4,7 +4,14 @@ propose a build plan for the most urgent one.
 Run:
     .venv/Scripts/python demo.py
 """
+import sys
 from pathlib import Path
+
+# Windows terminals default stdout to cp1252, which can't encode characters
+# the model streams back (em dashes, etc.) - Strands' own callback handler
+# prints those directly, so this needs to be fixed here, not by avoiding
+# certain characters in our own prompts.
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 from perk_pilot.agent import build_agent
 
